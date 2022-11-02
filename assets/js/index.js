@@ -180,5 +180,6 @@ function carrito() {
     <th scope="col">Subtotal</th>
     </tr>
 </thead>
+
 `
 }
