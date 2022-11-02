@@ -1,3 +1,9 @@
+const carro = []
+
+let elementos
+
+let data
+
 //---------VARIABLES SWEET ALERT---------------//
 let edad = async function inputEdad() {
     const {
@@ -69,76 +75,110 @@ function inicio() {
 }
 inicio()
 
-//---------------------------TRAER PRODUCTOS---------------------// 
 
-async function fetchProductos() {
-    let traerProductos = await fetch('./assets/js/productos.json')
-    return await traerProductos.json()
-}
+//-------------------------TRAERPRODUCTOS Y IMPRIMIR PRODUCTOS-------------------//
+const contenedor = document.querySelector('#contenedor')
+const bottles = document.querySelector('#bottles')
+const master = document.querySelector('master')
+const agregar = document.querySelector('#agregar')
+//-----------------------------------------------------//
+const select = document.querySelector('#select')
+const cantidad = document.querySelector('#cantidad')
+const inputPrecio = document.querySelector('#precio')
+const subtotal = document.querySelector('#subtotal')
 
 
-var productos = []
 
-fetchProductos().then(producto => {
-    productos = producto
-})
+async function printBottles() {
+    traerProductos = await fetch("./assets/js/productos.json");
+    let data = await traerProductos.json();
+    let productos = data;
+    elementos = productos
 
-//-------------------------IMPRIMIR PRODUCTOS-------------------//
 
-function printBottles(){
-    const bottles = document.querySelector('#bottles')
-    
-    var print = productos.forEach((producto) => {
-        const div = document.createElement('div')
-        div.classList.add('producto')
+    await productos.forEach((producto) => {
+        const div = document.createElement("div");
+        div.classList.add("producto");
         div.innerHTML = `
+        <div id="bottles">
         <img src="${producto.img}">
                 <div id="info">
                     <h3>${producto.nombre}</h3>
                     <h4>${producto.precio}</h4>
-                    <button>Agregar producto</button>
+                    <input type="button" class="agregar" id="agregar${producto.id}" value="Agregar producto">
                 </div>
-        `
-        bottles.appendChild(div)
-    })
-    
-    bottles.innerText += print
-    }
-    
-    printBottles()
-
-// const $bottles = document.querySelector('#bottles'),
-// $template = document.getElementById('template-card').content,
-// $fragment = document.createDocumentFragment()
-// $card = document.querySelector('#card')
-// $info = document.querySelector('#info')
-// productos
-
-// productos.forEach(el => {
-//     $template.querySelector("img").setAttribute('src',el.img)
-//     $info.querySelector("h3").textContent = el.nombre
-//     $info.querySelector("h4").textContent = el.precio
-//     $info.querySelector("button").textContent = "Agregar articulo"
-
-//     let $clone = document.importNode($template, true)
-//     $fragment.appendChild($clone)
-// });
-
-// $bottles.appendChild($fragment)
+        <div>
+        `;
+        bottles.appendChild(div);
+    });
 
 
-// const bottles = document.querySelector('#bottles')
-// const print = productos.forEach(el => {
-//     `
-//     <div class="col-sm" id="card">
-//     <img src="${el.img}">
-//     <div id="info">
-//         <h3>${el.nombre}</h3>
-//         <h4>${el.precio}</h4>
-//         <button>Agreagr articulo</button>
-// </div>
-// </div>
+
+}
+
+
+
+// hacerPedido()
+
+printBottles()
+
+
+//--------------------HACER PEDIDO----------------------//
+// function hacerPedido() {
+//     const master = document.querySelector('#master')
+//     const div1 = document.createElement('div')
+//     div1.classList.add('customer')
+
+//     div1.innerHTML = `
+// <h2>HAGA SU PEDIDO</h2>
+//                 <form action="">
+//                     <div>
+//                         <p>Seleccione su Brebaje</p>
+//                         <select id="select">
+//                         <option value="0">Gin Bombay Sapphire 750 cc</option>
+//                         <option value="1">Ron Malibu 750 cc</option>
+//                         <option value="2">Bailey's Original Cream 735 cc</option>
+//                         <option value="3">Aperol 750 cc</option>
+//                         <option value="4">Fernet Branca 750 cc</option>
+//                         <option value="5">Whisky Jonnie Walker Black label 700 cc</option>
+//                         <option value="6">Vodka Smirnoff 700 cc</option>
+//                         <option value="7">Vodka Absolut Original 1400 cc</option>
+//                         </select>
+//                     </div>
+//                     <div>
+//                         <p>Cantidad</p>
+//                         <input type="number" id="cantidad">
+//                     </div>
+//                     <div>
+//                         <p>Precio</p>
+//                         <input type="number" disabled id="precio" >
+//                     </div>
+//                     <div>
+//                         <p>Subtotal</p>
+//                         <input type="number" disabled id="subtotal">
+//                     </div>
+//                     <button>AGREGAR</button>
+//                 </form>
 // `
-// }).appendChild(bottles)
+//     master.appendChild(div1)
 
-// bottles.innerHTML = print
+
+
+// }
+
+
+function carrito() {
+    const div2 = document.createElement('div')
+    div2.classList.add('carrito')
+    div2.innerHTML = `
+<table class="table table-dark">
+<thead>
+    <tr>
+    <th scope="col">#</th>
+    <th scope="col">Producto</th>
+    <th scope="col">Precio</th>
+    <th scope="col">Subtotal</th>
+    </tr>
+</thead>
+`
+}
