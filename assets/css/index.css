@@ -1,3 +1,4 @@
+
 *{
     margin: 0;
     padding: 0;
@@ -50,6 +51,7 @@ main{
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-top: 3rem;
 }
 #info{
     display: flex;
@@ -66,6 +68,7 @@ main{
     color: #d7df91;
     font-weight: 400;
     max-width: 90%;
+    margin-bottom: 3rem;
 }
 #btn{
     width: 23rem;
@@ -75,4 +78,73 @@ main{
     background-color: #d7df91;
     color: black;
     border-radius: 30px;
+    margin-bottom: 5rem;
+}
+#bottles{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas: 
+    "gin ron baileys aperol"
+    "fernet whisky smirnoff absolut"
+    ;
+    background-color: black;
+}
+
+.producto{
+    border: 2px solid #311D31;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#info{
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+.producto-nombre{
+    color: #ACA9A6;
+    width: 50%;
+    font-size: 2em;
+}
+.producto-precio{
+    color: #CC9E06;
+    font-size: 3em;
+    font-weight: 600;
+}
+.agregar{
+    background-color: #81fe02;
+    color: black;
+    cursor: pointer;
+    font-size: 1.3em;
+    height: 3em;
+    width: 6em;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.gin{
+    grid-area: gin;
+}
+.ron{
+    grid-area: ron;
+}
+.baileys{
+    grid-area: baileys;
+}
+.aperol{
+    grid-area: aperol;
+}
+.fernet{
+    grid-area: fernet;
+}
+.whisky{
+    grid-area: whisky;
+}
+.smirnoff{
+    grid-area: smirnoff;
+}
+.absolut{
+    grid-area: absolut;
 }

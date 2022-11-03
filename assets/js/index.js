@@ -73,7 +73,7 @@ function inicio() {
         })()
     }
 }
-inicio()
+// inicio()
 
 
 //-------------------------TRAERPRODUCTOS Y IMPRIMIR PRODUCTOS-------------------//
@@ -98,16 +98,16 @@ async function printBottles() {
 
     await productos.forEach((producto) => {
         const div = document.createElement("div");
-        div.classList.add("producto");
+        div.classList.add(producto.alias);
+        div.classList.add("producto")
         div.innerHTML = `
-        <div id="bottles">
+        <a name="brebaje"></a>
         <img src="${producto.img}">
                 <div id="info">
-                    <h3>${producto.nombre}</h3>
-                    <h4>${producto.precio}</h4>
-                    <input type="button" class="agregar" id="agregar${producto.id}" value="Agregar producto">
+                    <h3 class="producto-nombre">${producto.nombre}</h3>
+                    <h4 class="producto-precio">$${producto.precio}</h4>
+                    <input type="button" class="agregar" id="agregar${producto.id}" value="Agregar \n producto">
                 </div>
-        <div>
         `;
         bottles.appendChild(div);
     });
