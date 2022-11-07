@@ -128,7 +128,7 @@ async function printBottles() {
                 precio: producto.precio,
                 img: producto.img,
             })
-            printCarrito()
+            renderizarCarrito()
         })
     });
 
@@ -183,53 +183,43 @@ printBottles()
 
 
 // }
-
-function printCarrito() {
-
-    const div2 = document.createElement('div')
-    div2.classList.add('carrito')
-    div2.innerHTML = `
-<table class="table table-dark">
-<thead>
-    <tr>
-    <th scope="col">#</th>
-    <th scope="col">Producto</th>
-    <th scope="col">Cantidad</th>
-    <th scope="col">Precio</th>
-    <th scope="col">Subtotal</th>
-    </tr>
-</thead>
-<tbody id="tbody">
-
-</tbody>
-
-`
-
-    let i = carro.length
-
-carro.forEach((producto) => {
-    let carritoContent = document.createElement("tr")
-    carritoContent.className = 'carrito-content'
-    carritoContent.innerHTML = `
-    <th scope="row">${i}</th>
-    <td>${producto.nombre}</td>
-    <td>${producto.precio}</td>
-    <td></td>
-    <td></td>
-    <td>
-    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
-    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
-    </td>
-    `
-})
-
 const tbody = document.querySelector("tbody")
 
+// printCarrito()
 
-
+function renderizarCarrito() {
+    // Vaciamos todo el html
+    tbody.textContent = '';
+    // Quitamos los duplicados
+    const carritoSinDuplicados = [...new Set(carro)];
+    // Generamos los Nodos a partir de carrito
+    carritoSinDuplicados.forEach((item) => {
+        // Obtenemos el item que necesitamos de la variable base de datos
+        const miItem = elementos.filter((itemBaseDatos) => {
+            // ¿Coincide las id? Solo puede existir un caso
+            return itemBaseDatos.id === parseInt(item);
+        });
+        // Cuenta el número de veces que se repite el producto
+        const numeroUnidadesItem = carro.reduce((total, itemId) => {
+            // ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
+            return itemId === item ? total += 1 : total;
+        }, 0);
+        // Creamos el nodo del item del carrito
+        let carritoContent = document.createElement("tr")
+    carritoContent.className = 'carrito-content'
+    carritoContent.innerHTML = `
+    <th scope="row">${numeroUnidadesItem}</th>
+    <td>${item.nombre}</td>
+    <td></td>
+    <td>${item.precio}</td>
+    <td>${item.precio * cantidad}</td>
+    <td id="borrar">🗑</td>
+`
 tbody.append(carritoContent)
+    })
+    const borrar = document.querySelector("#borrar")
 
-master.append(div2)
 
 }
+renderizarCarrito()
 
