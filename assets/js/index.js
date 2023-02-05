@@ -128,7 +128,12 @@ async function printBottles() {
                 precio: producto.precio,
                 img: producto.img,
             })
-            renderizarCarrito()
+            renderizarCarrito({
+                id: producto.id,
+                nombre: producto.nombre,
+                precio: producto.precio,
+                img: producto.img,
+            })
         })
     });
 
@@ -187,39 +192,89 @@ const tbody = document.querySelector("tbody")
 
 // printCarrito()
 
-function renderizarCarrito() {
-    // Vaciamos todo el html
-    tbody.textContent = '';
-    // Quitamos los duplicados
-    const carritoSinDuplicados = [...new Set(carro)];
-    // Generamos los Nodos a partir de carrito
-    carritoSinDuplicados.forEach((item) => {
-        // Obtenemos el item que necesitamos de la variable base de datos
-        const miItem = elementos.filter((itemBaseDatos) => {
-            // ¿Coincide las id? Solo puede existir un caso
-            return itemBaseDatos.id === parseInt(item);
-        });
-        // Cuenta el número de veces que se repite el producto
-        const numeroUnidadesItem = carro.reduce((total, itemId) => {
-            // ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
-            return itemId === item ? total += 1 : total;
-        }, 0);
-        // Creamos el nodo del item del carrito
-        let carritoContent = document.createElement("tr")
-    carritoContent.className = 'carrito-content'
-    carritoContent.innerHTML = `
-    <th scope="row">${numeroUnidadesItem}</th>
-    <td>${item.nombre}</td>
-    <td></td>
-    <td>${item.precio}</td>
-    <td>${item.precio * cantidad}</td>
-    <td id="borrar">🗑</td>
-`
-tbody.append(carritoContent)
-    })
-    const borrar = document.querySelector("#borrar")
+// function renderizarCarrito() {
+//     // Vaciamos todo el html
+//     tbody.textContent = '';
+//     // Quitamos los duplicados
+//     const carritoSinDuplicados = [...new Set(carro)];
+//     console.log(carritoSinDuplicados)
+//     // Generamos los Nodos a partir de carrito
+//     carritoSinDuplicados.forEach((item) => {
+//         // Obtenemos el item que necesitamos de la variable base de datos
+//         const miItem = elementos.filter((itemBaseDatos) => {
+//             // ¿Coincide las id? Solo puede existir un caso
+//             return itemBaseDatos.id === parseInt(item);
+//         });
+//         // Cuenta el número de veces que se repite el producto
+//         const numeroUnidadesItem = carro.reduce((total, itemId) => {
+//             // ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
+//             return carritoSinDuplicados.forEach(e => e.cant = itemId === miItem ? total += 1 : total);
+//         }, 0);
+//         // Creamos el nodo del item del carrito
+//         let carritoContent = document.createElement("tr")
+//     carritoContent.className = 'carrito-content'
+//     carritoContent.innerHTML = `
+//     <th scope="row">${numeroUnidadesItem}</th>
+//     <td>${item.nombre}</td>
+//     <td><input type="number id="cantidad" class="cantidad" value="${item.total}"></td>
+//     <td>${item.precio}</td>
+//     <td id="subtotal">${subtotal}</td>
+//     <td id="borrar"><span class="eliminar">🗑</span></td>
+// `
+// tbody.append(carritoContent)})
+
+// }
+
+
+eliminar = document.querySelector('.eliminar')
+
+const elminarProducto = () => {
+    carritoSinDuplicados.find
+}
+
+// const sinDuplicados = () => {
+//     tbody.textContent = ''
+//     const 
+// }
+
+const renderizarCarrito = (obj) => {
+    tbody.textContent = ''
+let uniqueProducts = {};
+
+for (let i = 0; i < carro.length; i++) {
+    let item = carro[i];
+    if (uniqueProducts.hasOwnProperty(item.nombre)) {
+        uniqueProducts[item.nombre]++;
+    } else {
+        uniqueProducts[item.nombre] = 1;
+    }
+}
+
+let carroResult = Object.keys(uniqueProducts).map(function (product) {
+
+    const producto = {
+        ...obj,
+        cantidad: uniqueProducts[product]
+    };
+    console.log(producto)
+    
+    let carritoContent = document.createElement("tr")
+        carritoContent.className = 'carrito-content'
+        carritoContent.innerHTML = `
+        <th scope="row">*</th>
+        <td>${producto.nombre}</td>
+        <td><input type="number id="cantidad" class="cantidad" value="${producto.cantidad}"></td>
+        <td>${producto.precio}</td>
+        <td id="subtotal">${producto.cantidad * producto.precio}</td>
+        <td id="borrar"><span class="eliminar">🗑</span></td>
+    `
+    tbody.append(carritoContent)
+
+    return producto
+});
+
+console.log(carroResult)
 
 
 }
-renderizarCarrito()
 

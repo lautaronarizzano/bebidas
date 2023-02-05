@@ -162,3 +162,10 @@ main{
 .absolut{
     grid-area: absolut;
 }
+
+.cantidad{
+    width: 3rem;
+}
+.eliminar{
+    cursor: pointer;
+}
